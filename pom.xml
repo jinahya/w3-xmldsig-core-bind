@@ -1,19 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- The Basics -->
+  <parent>
+    <groupId>com.github.jinahya</groupId>
+    <artifactId>jinahya-parent</artifactId>
+    <version>0.6</version>
+  </parent>
+
   <groupId>com.github.jinahya</groupId>
   <artifactId>xmldsig-core-bind</artifactId>
   <version>0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <parent>
-    <groupId>com.github.jinahya</groupId>
-    <artifactId>ossrh-parent</artifactId>
-    <version>0.2</version>
-  </parent>
-  <dependencyManagement />
+
+  <name>${project.artifactId}</name>
+  <description>w3 xmldsig-core1 binding</description>
+  <url>http://jinahya.github.io/${project.artifactId}/site/${project.version}</url>
+  <inceptionYear>2015</inceptionYear>
+
+  <prerequisites>
+    <maven>3.0.9</maven>
+  </prerequisites>
+
+  <scm>
+    <connection>scm:git:git@github.com:jinahya/${project.artifactId}.git</connection>
+    <developerConnection>scm:git:git@github.com:jinahya/${project.artifactId}.git</developerConnection>
+    <url>https://github.com/jinahya/${project.artifactId}</url>
+    <tag>HEAD</tag>
+  </scm>
+  <issueManagement>
+    <system>GitHub Issues</system>
+    <url>https://github.com/jinahya/${project.artifactId}/issues</url>
+  </issueManagement>
+
+  <properties>
+    <maven.compiler.source>1.6</maven.compiler.source>
+    <maven.compiler.target>1.6</maven.compiler.target>
+    <maven.compiler.testSource>1.8</maven.compiler.testSource>
+    <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>ch.qos.logback</groupId>
@@ -28,16 +57,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.source>1.6</maven.compiler.source>
-    <maven.compiler.target>1.6</maven.compiler.target>
-    <maven.compiler.testSource>1.8</maven.compiler.testSource>
-    <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
-  </properties>
 
-  <!-- Build Settings -->
   <build>
     <pluginManagement>
       <plugins>
@@ -80,36 +100,6 @@
     </pluginManagement>
     <plugins>
       <plugin>
-        <groupId>com.github.github</groupId>
-        <artifactId>site-maven-plugin</artifactId>
-        <version>0.12</version>
-        <configuration>
-          <server>github</server>
-          <message>creating site for ${project.version}</message>
-          <path>site/${project.version}</path>
-          <merge>true</merge>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>site</goal>
-            </goals>
-            <!--phase>site-deploy</phase-->
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.3</version>
-        <configuration>
-          <tagNameFormat>@{project.version}</tagNameFormat>
-          <pushChanges>false</pushChanges>
-          <localCheckout>true</localCheckout>
-          <goals>install</goals>
-        </configuration>
-      </plugin>
-      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>animal-sniffer-maven-plugin</artifactId>
         <version>1.14</version>
@@ -151,11 +141,12 @@
         <executions>
           <execution>
             <id>xjc</id>
-            <configuration>
-            </configuration>
             <goals>
               <!--<goal>xjc</goal>-->
             </goals>
+            <configuration>
+              <packageName>com.github.jinahya.xmldsig.core.bind</packageName>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -171,12 +162,14 @@
             <configuration>
               <schemaDirectory>src/main/xsd</schemaDirectory>
               <bindingDirectory>src/main/xjb</bindingDirectory>
+              <generatePackage>com.github.jinahya.xmldsig.core.bind</generatePackage>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+
   <reporting>
     <plugins>
       <plugin>
@@ -191,135 +184,4 @@
     </plugins>
   </reporting>
 
-  <!-- More Project Information -->
-  <name>${project.artifactId}</name>
-  <description>w3 xmldsig-core1 binding</description>
-  <url>http://jinahya.github.io/${project.artifactId}/site/${project.version}</url>
-  <inceptionYear>2015</inceptionYear>
-  <licenses>
-    <license>
-      <name>Apache 2</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-      <comments>A business-friendly OSS license</comments>
-    </license>
-  </licenses>
-  <organization />
-  <developers>
-    <developer>
-      <id>jinahya</id>
-      <name>Jin Kwon</name>
-      <email>jinahya@gmail.com</email>
-    </developer>
-  </developers>
-  <contributors />
-
-  <!-- Environment Settings -->
-  <issueManagement>
-    <system>GitHub Issues</system>
-    <url>https://github.com/jinahya/${project.artifactId}/issues</url>
-  </issueManagement>
-  <ciManagement />
-  <mailingLists />
-  <scm>
-    <connection>scm:git:git@github.com:jinahya/xmldsig-core-bind.git</connection>
-    <developerConnection>scm:git:git@github.com:jinahya/xmldsig-core-bind.git</developerConnection>
-    <url>https://github.com/jinahya/xmldsig-core-bind</url>
-    <tag>HEAD</tag>
-  </scm>
-  <prerequisites>
-    <maven>3.0.4</maven>
-  </prerequisites>
-  <repositories />
-  <pluginRepositories />
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <!--
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-    -->
-  </distributionManagement>
-  <profiles>
-    <!--    <profile>
-      <id>ossrh</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-enforcer-plugin</artifactId>
-            <version>1.4.1</version>
-            <executions>
-              <execution>
-                <id>require-release-version</id>
-                <goals>
-                  <goal>enforce</goal>
-                </goals>
-                <configuration>
-                  <rules>
-                    <requireReleaseVersion>
-                      <message>No Snapshots Allowed!</message>
-                    </requireReleaseVersion>
-                  </rules>
-                  <fail>true</fail>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
-            <executions>
-              <execution>
-                <id>sign-artifacts</id>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-source-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>attach-sources</id>
-                <goals>
-                  <goal>jar-no-fork</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>-->
-  </profiles>
 </project>
